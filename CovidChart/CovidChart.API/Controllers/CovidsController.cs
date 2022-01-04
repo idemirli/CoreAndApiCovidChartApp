@@ -12,6 +12,7 @@ namespace CovidChart.API.Controllers
     [ApiController]
     public class CovidsController : ControllerBase
     {
+        //http://localhost:49131/api/covids  Postmandan çağıracağım URL (Controller düzeyinde çağrımı yapıyorum)
         private readonly CovidService _covidService;
         public CovidsController(CovidService covidService)
         {
@@ -22,8 +23,8 @@ namespace CovidChart.API.Controllers
         public async Task<IActionResult> SaveCovid(Covid covid)
         {
             await _covidService.SaveCovid(covid);
-            IQueryable<Covid> covidList = _covidService.GetList();
-            return Ok(covidList);
+            //IQueryable<Covid> covidList = _covidService.GetList();
+            return Ok(_covidService.GetCovidChartList());
         }
 
         [HttpGet]

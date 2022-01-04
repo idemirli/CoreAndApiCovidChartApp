@@ -27,6 +27,13 @@ namespace CovidChart.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.WithOrigins("http://localhost:35728").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                });
+            });
             services.AddScoped<CovidService>(); //class'lara DI yapmak için
             services.AddDbContext<CovidContext>(options =>
             {
@@ -45,6 +52,8 @@ namespace CovidChart.API
             }
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
